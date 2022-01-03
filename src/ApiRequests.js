@@ -8,11 +8,21 @@ const req = axios.create({
 });
 
 export const getJobs = (page, name) => {
-  console.log(page);
   if (!name) {
+    if (process.env === "production") {
+      return axios
+        .get(`${process.env.REACT_APP_API}/jobs?page=${page}`)
+        .then((res) => res.data);
+    }
     return axios.get(`/jobs?page=${page}`).then((res) => res.data);
   } else {
-    console.log(page,name);
+    if (process.env === "production") {
+      if (process.env === "production") {
+        return axios
+          .get(`${process.env.REACT_APP_API}/my/jobs?page=${page}`)
+          .then((res) => res.data);
+      }
+    }
     return axios.get(`/my/jobs?page=${page}`).then((res) => res.data);
   }
 };
